@@ -1,0 +1,5 @@
+outs:
+- md5: e731b6c39ba34e749295698472411ced
+  size: 83050460
+  path: detectionModel.onnx
+  isexec: true

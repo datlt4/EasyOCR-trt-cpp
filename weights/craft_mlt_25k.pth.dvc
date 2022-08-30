@@ -1,0 +1,5 @@
+outs:
+- md5: 2f8227d2def4037cdb3b34389dcf9ec1
+  size: 83152330
+  path: craft_mlt_25k.pth
+  isexec: true
