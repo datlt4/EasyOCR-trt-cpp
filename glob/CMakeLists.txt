@@ -6,7 +6,7 @@ set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS}")
 
 # GLOB
 set(INC ${INC} ${CMAKE_CURRENT_SOURCE_DIR})
-set(SRC ${SRC} glob.cpp)
+set(SRC ${SRC} c_glob.cpp)
 
 # Target
 add_library(${PROJECT_NAME} SHARED ${SRC})

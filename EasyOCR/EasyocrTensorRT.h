@@ -1,5 +1,5 @@
-#ifndef YOLOV4_H
-#define YOLOV4_H
+#ifndef EASYOCR_TENSORRT_H
+#define EASYOCR_TENSORRT_H
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/cudaarithm.hpp>
@@ -11,9 +11,9 @@
 #include <fstream>
 #include <cmath>
 #include <cassert>
+#include <tuple>
 #include "NvOnnxParser.h"
 #include "NvInferRuntime.h"
-#include "../vizgard/common.h"
 #include "../TrtExec/Trtexec.h"
 
 extern VizgardLogger::Logger *vizgardLogger;
@@ -31,6 +31,31 @@ namespace OCR
         ~EasyOCR(){};
         bool LoadEngine(const std::string &fileName);
         std::string EngineInference(cv::Mat &image);
+        std::tuple<std::string, float> EngineInference2(cv::Mat &image);
+
+    private:
+        std::vector<float> prepareImage(cv::Mat &img);
+        bool processInput(float *hostDataBuffer, const int batchSize, cudaStream_t &stream);
+        std::tuple<std::vector<char>, float> postProcess(float *output, size_t length);
+        IVizgardLogger iVLogger = IVizgardLogger();
+
+        const int BATCH_SIZE = 1;
+        const int IMAGE_WIDTH = -1;
+        const int IMAGE_HEIGHT = 64;
+        const int IMAGE_CHANNEL = 1;
+        const int OUTPUT_LENGTH = -1;
+        // const int OUTPUT_LENGTH_EXAMPLE = 89;
+        const int OUTPUT_WIDTH = 97;
+    };
+
+    class CRAFT : public TrtExec
+    {
+    protected:
+        int batch_size = 1;
+
+    public:
+        CRAFT() : TrtExec(){};
+        ~CRAFT(){};
 
     private:
         std::vector<float> prepareImage(cv::Mat &img);
@@ -51,7 +76,7 @@ namespace OCR
     template <class T>
     void softmax(T *input, size_t size);
 
-    std::vector<char> decode_greedy(std::vector<unsigned int> preds_index);
+    std::tuple<std::vector<char>, float> decode_greedy(std::vector<std::tuple<unsigned int, float>> &preds_index);
 }
 
-#endif // YOLOV4_H
+#endif // EASYOCR_TENSORRT_H

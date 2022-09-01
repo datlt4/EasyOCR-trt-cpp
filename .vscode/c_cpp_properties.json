@@ -8,8 +8,6 @@
                 "/usr/include/**",
                 "/usr/local/include/**",
                 "/usr/local/cuda/targets/x86_64-linux/include/**",
-                "/usr/local/lib/python3.8/dist-packages/torch/include/**",
-                "/usr/local/lib/python3.8/dist-packages/torch/include/torch/csrc/api/include/torch/**",
                 "/usr/local/TensorRT/include/**",
                 "./**"
             ],
@@ -22,8 +20,6 @@
                     "/usr/include/**",
                     "/usr/local/include/**",
                     "/usr/local/cuda/targets/x86_64-linux/include/**",
-                    "/usr/local/lib/python3.8/dist-packages/torch/include/**",
-                    "/usr/local/lib/python3.8/dist-packages/torch/include/torch/csrc/api/include/torch/**",
                     "/usr/local/TensorRT/include/**",
                     "./**"
                 ],
