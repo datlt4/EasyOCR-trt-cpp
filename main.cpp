@@ -8,13 +8,14 @@ VizgardLogger::Logger *vizgardLogger = VizgardLogger::LoggerFactory::CreateConso
 
 int main(int argc, char **argv)
 {
-    OCR::EasyOCR easyocr;
-    easyocr.LoadEngine("../weights/recognitionModel.engine");
 
     std::string path = "../samples/extracted/";
     c_glob::glob _glob(path + "*.jpg");
     while (_glob)
     {
+        OCR::EasyOCR easyocr;
+        easyocr.LoadEngine("../weights/recognitionModel.engine");
+
         std::cout << "\n"
                   << _glob.current_match() << std::endl;
         cv::Mat image_bgr = cv::imread(path + _glob.current_match());
@@ -34,5 +35,6 @@ int main(int argc, char **argv)
     // cv::Mat image_bgr = cv::imread("/mnt/4B323B9107F693E2/TensorRT/OCR/EasyOCR/results/In.jpg");
     // std::string s = easyocr.EngineInference(image_bgr);
     // std::cout << "[ RESULT ]:  \"" << s << "\"" << std::endl;
+
     return 0;
 }
