@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.2)
 
-project(vizgard LANGUAGES CXX)
+project(emoi LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
@@ -39,7 +39,6 @@ add_subdirectory(TrtExec)
 add_subdirectory(EasyOCR)
 add_subdirectory(glob)
 set(LIB ${LIB} TrtExec EasyOCR glob)
-set(INC ${INC} ${PROJECT_SOURCE_DIR}/vizgard)
 
 message(STATUS "Source directories:  ${SRC}")
 message(STATUS "Include directories: ${INC}")

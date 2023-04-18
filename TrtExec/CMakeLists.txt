@@ -37,7 +37,6 @@ set(INC ${INC} ${TENSORRT_INCLUDE_DIR})
 # # main.cpp
 # set(SRC ${SRC} main.cpp)
 set(INC ${INC} ${CMAKE_CURRENT_SOURCE_DIR})
-set(INC ${INC} ${PROJECT_SOURCE_DIR}/vizgard)
 
 # Target
 add_executable("TrtExec-bin" main.cpp Trtexec.cpp)

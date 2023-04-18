@@ -16,7 +16,7 @@
 #include "NvInferRuntime.h"
 #include "../TrtExec/Trtexec.h"
 
-extern VizgardLogger::Logger *vizgardLogger;
+extern EmoiLogger::Logger *emoiLogger;
 namespace OCR
 {
     const char c[] = {'\0', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', ' ', '*' /*€*/, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
@@ -37,7 +37,7 @@ namespace OCR
         std::vector<float> prepareImage(cv::Mat &img);
         bool processInput(float *hostDataBuffer, const int batchSize, cudaStream_t &stream);
         std::tuple<std::vector<char>, float> postProcess(float *output, size_t length);
-        IVizgardLogger iVLogger = IVizgardLogger();
+        IEmoiLogger iVLogger = IEmoiLogger();
 
         const int BATCH_SIZE = 1;
         const int IMAGE_WIDTH = -1;
@@ -62,7 +62,7 @@ namespace OCR
         std::vector<char> postProcess(float *output, size_t outSize);
         bool processInput(float *hostDataBuffer, const int batchSize, cudaStream_t &stream);
 
-        IVizgardLogger iVLogger = IVizgardLogger();
+        IEmoiLogger iVLogger = IEmoiLogger();
 
         const int BATCH_SIZE = 1;
         const int IMAGE_WIDTH = -1;

@@ -30,7 +30,6 @@ set(INC ${INC} ${TENSORRT_INCLUDE_DIR})
 
 # TensorRT executable file
 # set(SRC ${SRC} Trtexec.cpp)
-set(INC ${INC} ${PROJECT_SOURCE_DIR}/vizgard)
 set(LIB ${LIB} TrtExec)
 
 # EasyocrTensorRT.cpp

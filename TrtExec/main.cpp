@@ -1,6 +1,6 @@
 #include "Trtexec.h"
 
-VizgardLogger::Logger *vizgardLogger = VizgardLogger::LoggerFactory::CreateConsoleLogger(VizgardLogger::INFO);
+EmoiLogger::Logger *emoiLogger = EmoiLogger::LoggerFactory::CreateConsoleLogger(EmoiLogger::INFO);
 
 // ./Trtexec \
 //     --onnx model.onnx \

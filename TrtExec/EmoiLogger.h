@@ -42,7 +42,7 @@
 #define TAGLINE "\t<File:" << __FILE__ << ", FUNC:" << __FUNCTION__ << ">" \
                             << "<L" << __LINE__ << "> "
 
-namespace VizgardLogger
+namespace EmoiLogger
 {
 
     enum LogLevel
@@ -305,5 +305,5 @@ namespace VizgardLogger
 Logger file
 Usage:
 */
-extern VizgardLogger::Logger *vizgardLogger;
-#define VLOG(level) VizgardLogger::LogTransaction(vizgardLogger, VizgardLogger::level, __FILE__, __LINE__, __FUNCTION__).GetStream()
+extern EmoiLogger::Logger *emoiLogger;
+#define VLOG(level) EmoiLogger::LogTransaction(emoiLogger, EmoiLogger::level, __FILE__, __LINE__, __FUNCTION__).GetStream()

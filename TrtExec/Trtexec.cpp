@@ -3,19 +3,19 @@
 bool TrtExec::parseOnnxModel()
 {
     // const char inputName[10] = "input";
-    VizgardUniquePtr<nvinfer1::IBuilder> builder{nvinfer1::createInferBuilder(iVLogger)};
+    EmoiUniquePtr<nvinfer1::IBuilder> builder{nvinfer1::createInferBuilder(iVLogger)};
     // We need to define explicit batch
     const auto explicitBatch = 1U << static_cast<uint32_t>(nvinfer1::NetworkDefinitionCreationFlag::kEXPLICIT_BATCH);
-    VizgardUniquePtr<nvinfer1::INetworkDefinition> prediction_network{builder->createNetworkV2(explicitBatch)};
-    // VizgardUniquePtr< nvinfer1::INetworkDefinition > network{builder->createNetwork()};
-    VizgardUniquePtr<nvonnxparser::IParser> parser{nvonnxparser::createParser(*prediction_network, iVLogger)};
+    EmoiUniquePtr<nvinfer1::INetworkDefinition> prediction_network{builder->createNetworkV2(explicitBatch)};
+    // EmoiUniquePtr< nvinfer1::INetworkDefinition > network{builder->createNetwork()};
+    EmoiUniquePtr<nvonnxparser::IParser> parser{nvonnxparser::createParser(*prediction_network, iVLogger)};
     // parse ONNX
     if (!parser->parseFromFile(info.onnx_dir.c_str(), static_cast<int>(nvinfer1::ILogger::Severity::kINFO)))
     {
         VLOG(ERROR) << "ERROR: could not parse the model.";
         return false;
     }
-    VizgardUniquePtr<nvinfer1::IBuilderConfig> config{builder->createBuilderConfig()};
+    EmoiUniquePtr<nvinfer1::IBuilderConfig> config{builder->createBuilderConfig()};
     if (!config)
     {
         VLOG(ERROR) << "Create builder config failed.";
@@ -52,7 +52,7 @@ bool TrtExec::saveEngine(const std::string &fileName)
         VLOG(ERROR) << "Cannot open engine file: " << fileName;
         return false;
     }
-    VizgardUniquePtr<nvinfer1::IHostMemory> serializedEngine{this->prediction_engine->serialize()};
+    EmoiUniquePtr<nvinfer1::IHostMemory> serializedEngine{this->prediction_engine->serialize()};
     if (serializedEngine == nullptr)
     {
         VLOG(ERROR) << "Engine serialization failed";
@@ -83,7 +83,7 @@ bool TrtExec::loadEngine(const std::string &fileName)
         return false;
     }
 
-    VizgardUniquePtr<nvinfer1::IRuntime> runtime{nvinfer1::createInferRuntime(iVLogger.getTRTLogger())};
+    EmoiUniquePtr<nvinfer1::IRuntime> runtime{nvinfer1::createInferRuntime(iVLogger.getTRTLogger())};
     this->prediction_engine.reset(runtime->deserializeCudaEngine(engineData.data(), fsize, nullptr));
     this->prediction_context.reset(this->prediction_engine->createExecutionContext());
     this->maxBatchSize = this->prediction_engine->getMaxBatchSize();

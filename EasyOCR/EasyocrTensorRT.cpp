@@ -1,5 +1,5 @@
 #include "EasyocrTensorRT.h"
-using namespace VizgardTrt;
+using namespace EmoiTrt;
 // using namespace OCR;
 
 namespace OCR

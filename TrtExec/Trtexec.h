@@ -18,7 +18,7 @@
 #include "NvInfer.h"
 #include "NvInferRuntime.h"
 #include "fstream"
-#include "VizgardLogger.h"
+#include "EmoiLogger.h"
 
 #ifndef TAGLINE
 #define TAGLINE "\t<L" << __LINE__ << "> "
@@ -58,11 +58,11 @@ struct OnnxParserConfig
 void ShowHelpAndExit(const char *szBadOption);
 bool ParseCommandLine(int argc, char *argv[], OnnxParserConfig &config);
 
-extern VizgardLogger::Logger *vizgardLogger;
+extern EmoiLogger::Logger *emoiLogger;
 
 using Severity = nvinfer1::ILogger::Severity;
 
-struct VizgardDestroyPtr
+struct EmoiDestroyPtr
 {
     template <class T>
     void operator()(T *obj) const
@@ -75,33 +75,33 @@ struct VizgardDestroyPtr
 };
 
 template <class T>
-using VizgardUniquePtr = std::unique_ptr<T, VizgardDestroyPtr>;
+using EmoiUniquePtr = std::unique_ptr<T, EmoiDestroyPtr>;
 
 template <typename T>
-VizgardUniquePtr<T> makeUnique(T *t)
+EmoiUniquePtr<T> makeUnique(T *t)
 {
-    return VizgardUniquePtr<T>{t};
+    return EmoiUniquePtr<T>{t};
 }
 
-struct VizgardOnnxParser
+struct EmoiOnnxParser
 {
-    VizgardUniquePtr<nvonnxparser::IParser> onnxParser;
+    EmoiUniquePtr<nvonnxparser::IParser> onnxParser;
     operator bool() const
     {
         return !!(onnxParser);
     }
 };
 
-class IVizgardLogger : public nvinfer1::ILogger
+class IEmoiLogger : public nvinfer1::ILogger
 {
 public:
     void log(Severity severity, const char *msg) noexcept override
     {
-        static VizgardLogger::LogLevel map[] = {
-            VizgardLogger::FATAL, VizgardLogger::ERROR, VizgardLogger::WARNING, VizgardLogger::INFO, VizgardLogger::TRACE};
+        static EmoiLogger::LogLevel map[] = {
+            EmoiLogger::FATAL, EmoiLogger::ERROR, EmoiLogger::WARNING, EmoiLogger::INFO, EmoiLogger::TRACE};
         if ((severity == Severity::kERROR) || (severity == Severity::kINTERNAL_ERROR))
         {
-            VizgardLogger::LogTransaction(vizgardLogger, map[(int)severity], __FILE__, __LINE__, __FUNCTION__).GetStream() << msg;
+            EmoiLogger::LogTransaction(emoiLogger, map[(int)severity], __FILE__, __LINE__, __FUNCTION__).GetStream() << msg;
         }
     }
     nvinfer1::ILogger &getTRTLogger()
@@ -113,12 +113,12 @@ public:
 class TrtExec
 {
 protected:
-    VizgardOnnxParser onnxParser;
-    VizgardUniquePtr<nvinfer1::INetworkDefinition> prediction_network;
-    VizgardUniquePtr<nvinfer1::ICudaEngine> prediction_engine{nullptr};
-    VizgardUniquePtr<nvinfer1::IExecutionContext> prediction_context{nullptr};
+    EmoiOnnxParser onnxParser;
+    EmoiUniquePtr<nvinfer1::INetworkDefinition> prediction_network;
+    EmoiUniquePtr<nvinfer1::ICudaEngine> prediction_engine{nullptr};
+    EmoiUniquePtr<nvinfer1::IExecutionContext> prediction_context{nullptr};
 
-    IVizgardLogger iVLogger = IVizgardLogger();
+    IEmoiLogger iVLogger = IEmoiLogger();
     int batch_size = 1;
     std::vector<nvinfer1::Dims> prediction_input_dims;
     std::vector<nvinfer1::Dims> prediction_output_dims;
@@ -162,7 +162,7 @@ private:
     OnnxParserConfig info;
 };
 
-namespace VizgardTrt
+namespace EmoiTrt
 {
     inline int64_t volume(const nvinfer1::Dims &d)
     {

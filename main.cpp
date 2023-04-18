@@ -4,7 +4,7 @@
 #include <chrono> // std::chrono::seconds
 #include "c_glob.h"
 
-VizgardLogger::Logger *vizgardLogger = VizgardLogger::LoggerFactory::CreateConsoleLogger(VizgardLogger::INFO);
+EmoiLogger::Logger *emoiLogger = EmoiLogger::LoggerFactory::CreateConsoleLogger(EmoiLogger::INFO);
 
 int main(int argc, char **argv)
 {
